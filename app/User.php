@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'profession_id',
     ];
 
     /**
@@ -35,5 +35,24 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
     ];
+
+    public function isAdmin(){
+      return $this->is_admin;
+    }
+    public function findByMail($email){
+      return User::where(compact('email'))->first();
+    }
+
+    //relacion de uno a uno
+    public function profession() {                //busca un campo profession mas _id
+      return $this->belongsTo(Profession::class); //
+    }
+
+        function __construct()
+        {
+          // code...
+        }
+
 }
